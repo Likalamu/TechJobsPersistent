@@ -1,13 +1,43 @@
-﻿<h1>Add New Employer</h1>
+﻿@model TechJobsPersistent.ViewModels.AddEmployerViewModel
 
-<form asp-controller="Employer" asp-action="ProcessAddEmployerForm" method="post">
+<h1>Add New Employer</h1>
+
+<form asp-controller="Employer" asp-action="Add" method="post">
     <div class="form-group">
         <label>Employer Name</label>
-        <input />
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
     </div>
     <div class="form-group">
         <label>Employer Location</label>
-        <input />
+        <input class="form-control" asp-for="Location" />
+        <span asp-validation-for="Location"></span>
     </div>
-    <input type="submit" value="Submit" />
+
+    <input type="submit" value="Add Employer" />
 </form>
+
+@*@if (Model.Count == 0)
+{
+    <p>No events yet!</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Location
+            </th>
+        </tr>
+        @foreach (var evt in Model)
+        {
+            <tr>
+                <td>@evt.Name</td>
+                <td>@evt.Location</td>
+            </tr>
+        }
+    </table>
+}*@

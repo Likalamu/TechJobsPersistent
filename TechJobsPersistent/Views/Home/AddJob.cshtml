@@ -8,5 +8,16 @@
     </div>
 
     <input type="submit" value="Add Job" />
+    <br>
+    <div class="form-group">
+        <label>Choose an Employer</label>
+        <select name="Employer" id="Employer">
+            <option value="test">Test</option>
+        </select>
+        <span></span>
+    </div>
+    <input type="submit" value="Enter" />
+    <br>
+    <a asp-controller="Employer" asp-action="Add" asp-route-id="@Model.EmployerId ">Add an Employer</a>
 </form>
 

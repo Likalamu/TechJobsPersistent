@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TechJobsPersistent.Data;
 using TechJobsPersistent.Models;
 using TechJobsPersistent.ViewModels;
 
@@ -13,24 +15,56 @@ namespace TechJobsPersistent.Controllers
     public class EmployerController : Controller
     {
         // GET: /<controller>/
+        private JobDbContext context;
+
+        public EmployerController(JobDbContext dbContext)
+        {
+            context = dbContext;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            List<Employer> employer = context.Employers.ToList();
+            return View(employer);
         }
 
         public IActionResult Add()
         {
-            return View();
+            AddEmployerViewModel addEmployerViewModel = new AddEmployerViewModel();
+            return View(addEmployerViewModel);
         }
 
-        public IActionResult ProcessAddEmployerForm()
+        [HttpPost]
+        public IActionResult Add(AddEmployerViewModel addEmployerViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                Employer newEmployer = new Employer
+                {
+                    Name = addEmployerViewModel.Name,
+                    Location = addEmployerViewModel.Location
+                };
+
+                context.Employers.Add(newEmployer);
+                context.SaveChanges();
+                return Redirect("/Employer");
+            }
+            return View(addEmployerViewModel);
         }
 
         public IActionResult About(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                return Redirect("/Employer");
+            }
+
+            Employer theEmployer = context.Employers
+                .Include(e => e.Name)
+                .Single(e => e.Id == id);
+            ViewBag.title = "Employers in Employer: " + theEmployer.Name;
+            return View("Index", theEmployer.Name);
+
         }
     }
 }
