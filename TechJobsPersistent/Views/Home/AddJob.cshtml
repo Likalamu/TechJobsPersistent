@@ -1,23 +1,35 @@
-﻿<h1>Add a Job</h1>
+﻿@model TechJobsPersistent.ViewModels.AddJobViewModel
+
+<h1>Add a Job</h1>
 
 <form asp-controller="Home" asp-action="ProcessAddJobForm" method="post">
     <div class="form-group">
         <label>Name</label>
         <input class="form-control" />
-        <span></span>
+        <span asp-validation-for="Name"></span>
+        @*<span></span>*@
     </div>
 
-    <input type="submit" value="Add Job" />
-    <br>
     <div class="form-group">
-        <label>Choose an Employer</label>
-        <select name="Employer" id="Employer">
-            <option value="test">Test</option>
-        </select>
-        <span></span>
+        <label asp-for="EmployerId">Employer</label>
+        <select asp-for="EmployerId" asp-items="Model.Jobs "></select>
+        <span asp-validation-for="EmployerId"></span>
     </div>
-    <input type="submit" value="Enter" />
+    <a asp-controller="Employer" asp-action="Add" asp-route-id="@Model.EmployerId ">Add New Employer</a>
     <br>
-    <a asp-controller="Employer" asp-action="Add" asp-route-id="@Model.EmployerId ">Add an Employer</a>
+
+    @*<div class="form-group">
+        @foreach (var skill in ViewBag.JobSkills)
+        {
+            <span>@skill.Name</span>
+            <input type="checkbox" name="selectedSkills" value="@skill.Id" />
+            <label for="@skill.Id">@skill.Name</label>
+            <br />
+        }
+    </div>*@
+    <a asp-controller="Skill" asp-action="Add" asp-route-id="@Model.EmployerId ">Add New Skill</a>
+    <br>
+    <input type="submit" value="Add Job" />
+
 </form>
 

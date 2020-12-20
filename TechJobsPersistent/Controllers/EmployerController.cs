@@ -35,7 +35,7 @@ namespace TechJobsPersistent.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddEmployerViewModel addEmployerViewModel)
+        public IActionResult ProcessAddEmployerForm(AddEmployerViewModel addEmployerViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -54,17 +54,17 @@ namespace TechJobsPersistent.Controllers
 
         public IActionResult About(int id)
         {
-            if (id == 0)
-            {
-                return Redirect("/Employer");
-            }
+            Job theJob = context.Jobs
+               .Include(e => e.Employer)
+               .Single(e => e.Id == id);
 
-            Employer theEmployer = context.Employers
-                .Include(e => e.Name)
-                .Single(e => e.Id == id);
-            ViewBag.title = "Employers in Employer: " + theEmployer.Name;
-            return View("Index", theEmployer.Name);
+            List<JobSkill> jobSkills = context.JobSkills
+                .Where(et => et.JobId == id)
+                .Include(et => et.Skill)
+                .ToList();
 
+            JobDetailViewModel viewModel = new JobDetailViewModel(theJob, jobSkills);
+            return View(viewModel);
         }
     }
 }

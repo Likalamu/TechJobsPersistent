@@ -9,29 +9,41 @@ namespace TechJobsPersistent.ViewModels
 {
     public class AddJobViewModel
     {
+        private List<JobSkill> jobSkills;
+
         public string Name { get; set; }
-        public string EmployerId { get; set; }
+        public int EmployerId { get; set; }
+        public string Description { get; set; }
 
-        public List<SelectListItem> Categories { get; set; }
+        public List<SelectListItem> Jobs { get; set; }
 
-        public AddJobViewModel(List<Job> categories)
+        public Skill Skill { get; set; }
+
+        public AddJobViewModel(List<Skill> possibleJobs, Skill theSkill)
         {
-            Categories = new List<SelectListItem>();
+            Jobs = new List<SelectListItem>();
 
-            foreach (var category in categories)
+            foreach (var job in possibleJobs)
             {
-                Categories.Add(
+                Jobs.Add(
                     new SelectListItem
                     {
-                        Value = category.Id.ToString(),
-                        Text = category.Name
+                        Value = job.Id.ToString(),
+                        Text = job.Name
                     }
                 ); ;
             }
+
+            Skill = theSkill;
         }
 
         public AddJobViewModel()
         {
+        }
+
+        public AddJobViewModel(List<JobSkill> jobSkills)
+        {
+            this.jobSkills = jobSkills;
         }
     }
 }
