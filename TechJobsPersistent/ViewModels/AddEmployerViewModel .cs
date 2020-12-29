@@ -18,26 +18,26 @@ namespace TechJobsPersistent.ViewModels
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Location must be between 3 and 50 characters")]
         public string Location { get; set; }
 
-        public List<SelectListItem> Employers { get; set; }
+        //public List<SelectListItem> Employers { get; set; }
 
-        public AddEmployerViewModel(List<Employer> employers)
-        {
-            Employers = new List<SelectListItem>();
+        //public AddEmployerViewModel(List<Employer> employers)
+        //{
+        //    Employers = new List<SelectListItem>();
 
-            foreach (var employer in employers)
-            {
-                Employers.Add(
-                    new SelectListItem
-                    {
-                        Value = employer.Id.ToString(),
-                        Text = employer.Name
-                    }
-                ); ;
-            }
-        }
+        //    foreach (var employer in employers)
+        //    {
+        //        Employers.Add(
+        //            new SelectListItem
+        //            {
+        //                Value = employer.Id.ToString(),
+        //                Text = employer.Name
+        //            }
+        //        ); ;
+        //    }
+        //}
 
-        public AddEmployerViewModel()
-        {
-        }
+        //public AddEmployerViewModel()
+        //{
+        //}
     }
 }

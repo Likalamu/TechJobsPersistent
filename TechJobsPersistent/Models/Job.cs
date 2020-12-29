@@ -15,13 +15,32 @@ namespace TechJobsPersistent.Models
 
         public List<JobSkill> JobSkills { get; set; }
 
-        public Job(string name)
+        public Job(string name, Employer employer)
         {
             Name = name;
+            Employer = employer;
         }
 
         public Job()
         {
         }
+
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Job @job &&
+                   Id == @job.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
     }
 }
